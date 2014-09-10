@@ -7,6 +7,7 @@
 //
 
 #import "BLCAppDelegate.h"
+#import "BLCWebBrowserViewController.h"
 
 @implementation BLCAppDelegate
 
@@ -15,6 +16,8 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
+    self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[[BLCWebBrowserViewController alloc] init]];  // Ask how this in making the chart from above in the Check Point.
+    
     [self.window makeKeyAndVisible];
     return YES;
 }

@@ -19,6 +19,7 @@
 		2667899819BA4D45003E13E4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2667898019BA4D45003E13E4 /* UIKit.framework */; };
 		266789A019BA4D45003E13E4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2667899E19BA4D45003E13E4 /* InfoPlist.strings */; };
 		266789A219BA4D45003E13E4 /* BlocBrowserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 266789A119BA4D45003E13E4 /* BlocBrowserTests.m */; };
+		266789AD19BA4DCB003E13E4 /* BLCWebBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 266789AC19BA4DCB003E13E4 /* BLCWebBrowserViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +49,8 @@
 		2667899D19BA4D45003E13E4 /* BlocBrowserTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "BlocBrowserTests-Info.plist"; sourceTree = "<group>"; };
 		2667899F19BA4D45003E13E4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		266789A119BA4D45003E13E4 /* BlocBrowserTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BlocBrowserTests.m; sourceTree = "<group>"; };
+		266789AB19BA4DCB003E13E4 /* BLCWebBrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLCWebBrowserViewController.h; sourceTree = "<group>"; };
+		266789AC19BA4DCB003E13E4 /* BLCWebBrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLCWebBrowserViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +110,8 @@
 		2667898219BA4D45003E13E4 /* BlocBrowser */ = {
 			isa = PBXGroup;
 			children = (
+				266789AB19BA4DCB003E13E4 /* BLCWebBrowserViewController.h */,
+				266789AC19BA4DCB003E13E4 /* BLCWebBrowserViewController.m */,
 				2667898B19BA4D45003E13E4 /* BLCAppDelegate.h */,
 				2667898C19BA4D45003E13E4 /* BLCAppDelegate.m */,
 				2667898E19BA4D45003E13E4 /* Images.xcassets */,
@@ -242,6 +247,7 @@
 			files = (
 				2667898D19BA4D45003E13E4 /* BLCAppDelegate.m in Sources */,
 				2667898919BA4D45003E13E4 /* main.m in Sources */,
+				266789AD19BA4DCB003E13E4 /* BLCWebBrowserViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
