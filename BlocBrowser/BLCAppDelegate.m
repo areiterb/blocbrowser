@@ -31,7 +31,7 @@
     BLCWebBrowserViewController *browserVC = [[navigationVC viewControllers] firstObject];
     [browserVC resetWebView];
     
-    if (browserVC != 0) {
+    if (browserVC) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Welcome!", @"Welcome title")
                                                         message:NSLocalizedString(@"Get excited to use the best web browser ever!", @"Welcome comment")
                                                        delegate:nil
