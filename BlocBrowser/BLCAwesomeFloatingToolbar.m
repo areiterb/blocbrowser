@@ -18,6 +18,8 @@
 
 @property (nonatomic, strong) UITapGestureRecognizer *tapGesture;
 @property (nonatomic, strong) UIPanGestureRecognizer *panGesture;
+@property (nonatomic, strong) UIPinchGestureRecognizer *pinchGesture;
+@property (nonatomic, strong) UILongPressGestureRecognizer *longGesture;
 
 @end
 
@@ -67,6 +69,13 @@
         [self addGestureRecognizer:self.tapGesture];
         self.panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panFired:)];
         [self addGestureRecognizer:self.panGesture];
+        self.pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handlePincheGesture:)];
+        [self addGestureRecognizer:self.pinchGesture];
+        self.longGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPressDuration:)];
+        [self addGestureRecognizer:self.longGesture];
+        self.longGesture.minimumPressDuration = 2.0;
+        [self addGestureRecognizer:_longGesture];
+        
     }
     
     return self;
@@ -117,14 +126,15 @@
 
 // Ask about this, seems complecated with so many checks!
 - (void) tapFired: (UITapGestureRecognizer *)recognizer {
-    if (recognizer.state == UIGestureRecognizerStateRecognized) {
-        CGPoint location = [recognizer locationInView:self];
-        UIView *tappedView = [self hitTest:location withEvent:nil];  // Ask what this means!
+    if (recognizer.state != UIGestureRecognizerStateRecognized) {
+        return;
+    }
+    CGPoint location = [recognizer locationInView:self];
+    UIView *tappedView = [self hitTest:location withEvent:nil];  // Ask what this means!
         
-        if ([self.labels containsObject:tappedView]) {
-            if ([self.delegate respondsToSelector:@selector(floatingToolbar:didSelectButtonWithTitle:)]) {
-                [self.delegate floatingToolbar:self didSelectButtonWithTitle:((UILabel *)tappedView).text];
-            }
+    if ([self.labels containsObject:tappedView]) {
+        if ([self.delegate respondsToSelector:@selector(floatingToolbar:didSelectButtonWithTitle:)]) {
+            [self.delegate floatingToolbar:self didSelectButtonWithTitle:((UILabel *)tappedView).text];
         }
     }
 }
@@ -140,6 +150,47 @@
         }
         
         [recognizer setTranslation:CGPointZero inView:self];
+    }
+    
+}
+
+- (void) handlePincheGesture: (UIPinchGestureRecognizer *)recognizer {
+    if (UIGestureRecognizerStateBegan == _pinchGesture.state ||
+        UIGestureRecognizerStateChanged == _pinchGesture.state) {
+            CGFloat currentScale = [[_pinchGesture.view.layer valueForKeyPath:@"transfrom.scale.x"] floatValue];
+        
+        CGFloat minScale = 1.0;
+        CGFloat maxScale = 2.0;
+        CGFloat zoomSpeed = 0.5;
+        
+        CGFloat deltaScale = _pinchGesture.scale;
+        
+        deltaScale = ((deltaScale - 1) * zoomSpeed) + 1;
+        
+        deltaScale = MIN(deltaScale, maxScale / currentScale);
+        deltaScale = MAX(deltaScale, minScale / currentScale);
+        
+        NSLog(@"%f", deltaScale);
+        
+        CGAffineTransform zoomTransform = CGAffineTransformScale(_pinchGesture.view.transform, deltaScale, deltaScale);
+        _pinchGesture.view.transform = zoomTransform;
+        
+        _pinchGesture.scale = 1;
+        
+    }
+}
+
+- (void) handleLongPressDuration: (UILongPressGestureRecognizer *)recognizer {
+    _longGesture.minimumPressDuration = 1.0;
+    if (recognizer.state == UIGestureRecognizerStateBegan) {
+        // NSInteger aRedValue = arc4random()%255;
+        [UIColor colorWithRed:arc4random()%255 green:arc4random()%255 blue:arc4random()%255 alpha:1];
+    }
+    if (recognizer.state == UIGestureRecognizerStateEnded) {
+        self.colors = @[[UIColor colorWithRed:199/255.0 green:158/255.0 blue:203/255.0 alpha:1],
+                        [UIColor colorWithRed:255/255.0 green:105/255.0 blue:97/255.0 alpha:1],
+                        [UIColor colorWithRed:222/255.0 green:165/255.0 blue:164/255.0 alpha:1],
+                        [UIColor colorWithRed:255/255.0 green:179/255.0 blue:71/255.0 alpha:1]];
     }
 }
 

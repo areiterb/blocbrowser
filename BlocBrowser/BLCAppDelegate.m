@@ -31,6 +31,7 @@
     BLCWebBrowserViewController *browserVC = [[navigationVC viewControllers] firstObject];
     [browserVC resetWebView];
     
+    
     if (browserVC) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Welcome!", @"Welcome title")
                                                         message:NSLocalizedString(@"Get excited to use the best web browser ever!", @"Welcome comment")
@@ -38,7 +39,6 @@
                                               cancelButtonTitle:NSLocalizedString(@"OK, I'm excited!", @"Welcome button title") otherButtonTitles:nil];
         [alert show];
     }
-
     
 }
 
