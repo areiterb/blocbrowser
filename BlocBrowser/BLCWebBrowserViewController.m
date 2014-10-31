@@ -86,6 +86,8 @@
 
     // Do any additional setup after loading the view.
     self.frameCount = 0;
+    
+    self.awesomeToolbar.frame = CGRectMake(20, 100, 280, 60);
 }
 
 - (void) viewWillLayoutSubviews {
@@ -104,8 +106,6 @@
     // Now, assign the frames
     self.textField.frame = CGRectMake(0, 0, width, itemHeight);
     self.webview.frame = CGRectMake(0, CGRectGetMaxY(self.textField.frame), width, browserHeight);
-    
-    self.awesomeToolbar.frame = CGRectMake(20, 100, 280, 60);
 }
 
  #pragma mark - UITextFieldDelegate

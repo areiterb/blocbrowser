@@ -9,7 +9,10 @@
 #import "BLCAwesomeFloatingToolbar.h"
 
 
-@interface BLCAwesomeFloatingToolbar ()
+@interface BLCAwesomeFloatingToolbar () {
+    CGFloat toolbarScale;
+    NSInteger colorIndex;
+}
 
 @property (nonatomic, strong) NSArray *currentTitles;
 @property (nonatomic, strong) NSArray *colors;
@@ -30,13 +33,15 @@
     self = [super init];
     
     if (self) {
-        
+        toolbarScale = 1.0;
         // Save the titles, and set the 4 colors
         self.currentTitles = titles;
         self.colors = @[[UIColor colorWithRed:199/255.0 green:158/255.0 blue:203/255.0 alpha:1],
                         [UIColor colorWithRed:255/255.0 green:105/255.0 blue:97/255.0 alpha:1],
                         [UIColor colorWithRed:222/255.0 green:165/255.0 blue:164/255.0 alpha:1],
                         [UIColor colorWithRed:255/255.0 green:179/255.0 blue:71/255.0 alpha:1]];
+        colorIndex = 0;
+  
         
         NSMutableArray *labelsArray = [[NSMutableArray alloc] init];
         
@@ -65,6 +70,7 @@
             [self addSubview:thisLabel];
         }
         
+        // self.dimButtons = [UIButton buttonWithType:UIButtonTypeSystem];
         self.tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapFired:)];
         [self addGestureRecognizer:self.tapGesture];
         self.panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panFired:)];
@@ -73,7 +79,7 @@
         [self addGestureRecognizer:self.pinchGesture];
         self.longGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPressDuration:)];
         [self addGestureRecognizer:self.longGesture];
-        self.longGesture.minimumPressDuration = 2.0;
+        self.longGesture.minimumPressDuration = 1.0;
         [self addGestureRecognizer:_longGesture];
         
     }
@@ -124,13 +130,12 @@
 }
 
 
-// Ask about this, seems complecated with so many checks!
 - (void) tapFired: (UITapGestureRecognizer *)recognizer {
     if (recognizer.state != UIGestureRecognizerStateRecognized) {
         return;
     }
     CGPoint location = [recognizer locationInView:self];
-    UIView *tappedView = [self hitTest:location withEvent:nil];  // Ask what this means!
+    UIView *tappedView = [self hitTest:location withEvent:nil];
         
     if ([self.labels containsObject:tappedView]) {
         if ([self.delegate respondsToSelector:@selector(floatingToolbar:didSelectButtonWithTitle:)]) {
@@ -142,8 +147,6 @@
 - (void) panFired:(UIPanGestureRecognizer *)recognizer {
     if (recognizer.state == UIGestureRecognizerStateChanged) {
         CGPoint translation = [recognizer translationInView:self];
-        
-        NSLog(@"New translation: %@", NSStringFromCGPoint(translation));
         
         if ([self.delegate respondsToSelector:@selector(floatingToolbar:didTryToPanWithOffset:)]) {
             [self.delegate floatingToolbar:self didTryToPanWithOffset:translation];
@@ -157,20 +160,10 @@
 - (void) handlePincheGesture: (UIPinchGestureRecognizer *)recognizer {
     if (UIGestureRecognizerStateBegan == _pinchGesture.state ||
         UIGestureRecognizerStateChanged == _pinchGesture.state) {
-            CGFloat currentScale = [[_pinchGesture.view.layer valueForKeyPath:@"transfrom.scale.x"] floatValue];
-        
-        CGFloat minScale = 1.0;
-        CGFloat maxScale = 2.0;
-        CGFloat zoomSpeed = 0.5;
         
         CGFloat deltaScale = _pinchGesture.scale;
         
-        deltaScale = ((deltaScale - 1) * zoomSpeed) + 1;
-        
-        deltaScale = MIN(deltaScale, maxScale / currentScale);
-        deltaScale = MAX(deltaScale, minScale / currentScale);
-        
-        NSLog(@"%f", deltaScale);
+        toolbarScale = deltaScale;
         
         CGAffineTransform zoomTransform = CGAffineTransformScale(_pinchGesture.view.transform, deltaScale, deltaScale);
         _pinchGesture.view.transform = zoomTransform;
@@ -181,16 +174,46 @@
 }
 
 - (void) handleLongPressDuration: (UILongPressGestureRecognizer *)recognizer {
-    _longGesture.minimumPressDuration = 1.0;
+    // Alpha {0000 0000} Red {0000 0000} Green {0000 0000} Blue {0000 0000}
     if (recognizer.state == UIGestureRecognizerStateBegan) {
-        // NSInteger aRedValue = arc4random()%255;
-        [UIColor colorWithRed:arc4random()%255 green:arc4random()%255 blue:arc4random()%255 alpha:1];
-    }
-    if (recognizer.state == UIGestureRecognizerStateEnded) {
-        self.colors = @[[UIColor colorWithRed:199/255.0 green:158/255.0 blue:203/255.0 alpha:1],
-                        [UIColor colorWithRed:255/255.0 green:105/255.0 blue:97/255.0 alpha:1],
-                        [UIColor colorWithRed:222/255.0 green:165/255.0 blue:164/255.0 alpha:1],
-                        [UIColor colorWithRed:255/255.0 green:179/255.0 blue:71/255.0 alpha:1]];
+        
+        /*
+        NSMutableArray *newLabelArray;
+        
+        for (int i = 0; i < self.colors.count; i++) {
+            UILabel *label = self.labels[i];
+            label.textColor = self.colors[i];
+            [newLabelArray addObject:label];
+        }
+         */
+        /*[self.colors enumerateObjectsUsingBlock:^(UIColor *obj, NSUInteger idx, BOOL *stop) {
+            // loops through colors 0->3
+        }];*/
+        [self.labels enumerateObjectsUsingBlock:^(UILabel *obj, NSUInteger idx, BOOL *stop) {
+            if (colorIndex == 0) {
+
+            }
+                
+        }];
+        
+        
+        // before long press
+        // label 1 = color 1
+        // label 2 = color 2
+        // label 3 = color 3
+        // label 4 = color 4
+        
+        // after first long press
+        // label 1 = color 2
+        // label 2 = color 3
+        // label 3 = color 4
+        // label 4 = color 1
+        
+        // after fourth long press
+        // label 1 = color 1
+        // label 2 = color 2
+        // label 3 = color 3
+        // label 4 = color 4
     }
 }
 

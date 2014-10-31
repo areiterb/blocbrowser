@@ -10,29 +10,29 @@
 	<string>BlocBrowser</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>23D572AE-546D-4FCB-8D98-0146A7F7285B</key>
+		<key>227267EF897994406B6DB96EEA3009AE35D46E94</key>
 		<string>https://github.com/areiterb/blocbrowser.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>BlocBrowser.xcodeproj/project.xcworkspace</string>
+	<string>BlocBrowser.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>23D572AE-546D-4FCB-8D98-0146A7F7285B</key>
+		<key>227267EF897994406B6DB96EEA3009AE35D46E94</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/areiterb/blocbrowser.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>23D572AE-546D-4FCB-8D98-0146A7F7285B</string>
+	<string>227267EF897994406B6DB96EEA3009AE35D46E94</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>23D572AE-546D-4FCB-8D98-0146A7F7285B</string>
+			<string>227267EF897994406B6DB96EEA3009AE35D46E94</string>
 			<key>IDESourceControlWCCName</key>
 			<string>BlocBrowser</string>
 		</dict>
